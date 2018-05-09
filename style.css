@@ -1,0 +1,156 @@
+html,body{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.titleBar{
+  position: absolute;
+  top:40px;
+  width: 500px;
+  padding-left: 30px;
+}
+
+h1{
+  font-size: 28px;
+  font-style: normal;
+  font-family: helvetica;
+}
+
+#subtitle{
+  font-size: 18px;
+  font-family: helvetica;
+  font-style: normal;
+  position:absolute;
+  top:130px;
+  left:40px;
+  width: 400px;
+}
+
+#counttitle{
+  font-size: 18px;
+  font-family: helvetica;
+  font-style: normal;
+  position:absolute;
+  top:310px;
+  left:40px;
+  width: 400px;
+}
+.sidebar {
+    position: absolute;
+    left: 0px;
+    width: 500px;
+    top: 0;
+    bottom: 0;
+
+    padding: 20px;
+    overflow-y: auto;
+}
+#modalTitle{
+  position:absolute;
+  top: 100px;
+  left: 400px;
+  width: 400px;
+  color: #fcfcfc;
+  font-family: helvetica;
+  font-size: 24px;
+  font-weight: bold;
+}
+#modalText{
+  position: absolute;
+  top: 140px;
+  left: 400px;
+  width: 400px;
+  color: #d2d6db;
+  font-size: 18px;
+  font-family: helvetica;
+  font-weight: normal;
+}
+#imaginary_container{
+  position: absolute;
+  top:400px;
+  left: 0px;
+  width: 350px;
+}
+#catButton {
+  top: 210px;
+  position: absolute;
+  left: 30px;
+  border-color: #444444;
+  font-weight: bold;
+  border-width: thin;
+}
+#dogButton {
+  position:absolute;
+  top: 210px;
+  left: 180px;
+  border-color: #444444;
+  color: #fff;
+  font-weight: bold;
+  border-width: thin;
+}
+#shelterButton {
+  position: absolute;
+  top: 210px;
+  left: 320px;
+  font-weight: bold;
+  border-color: #444444;
+  border-width: thin;
+}
+#resetButton {
+  position:absolute;
+  top: 260px;
+  left: 30px;
+  width: 440px;
+  font-style: normal;
+  font-family: helvetica;
+  background-color: #d4d7db;
+  color: #444444;
+  border-color: #444444;
+  border-width: medium;
+}
+#about{
+  position:absolute;
+  top:10px;
+  left: 410px;
+}
+#count{
+  position: absolute;
+  top: 400px;
+  left:40px;
+  font-family: helvetica;
+  font-size: 14px;
+  width: 440px;
+  overflow-y: scroll;
+  max-height: 100%;
+  bottom: 0;
+}
+#map{
+  right: 0px;
+  left: 500px;
+  height: 100%;
+  position:absolute;
+  -webkit-filter: grayscale(10%);
+  filter: grayscale(10%);
+}
+#result{
+  font-size: 24px;
+}
+#hr{
+  position: absolute;
+  left: 30px;
+  width: 435px;
+  top: 31px;
+  color: #254759;
+  background-color: #254759
+}
+#hr2{
+  position: absolute;
+  left: 30px;
+  width: 435px;
+  top: 282px;
+  color: #254759;
+  background-color: #254759
+}

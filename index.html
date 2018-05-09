@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- CSS Imports -->
+    <!-- Place framework CSS code here. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" integrity="sha256-iYUgmrapfDGvBrePJPrMWQZDcObdAcStKBpjP3Az+3s=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.css" integrity="sha256-XzD3RpaHPv7lzX9qt+2n1j5cWj48O24KsgaGYpKN8x8=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+    .leaflet-popup-content-wrapper {
+      background:#2c3e50;
+      color:#fff;
+      font-size:16px;
+      line-height:24px;
+      opacity: 0.8
+      }
+    .leaflet-popup-tip-container {
+      width:0px;
+      height:0px;
+      }
+    </style>
+
+  </head>
+  <body>
+    <!-- title bar -->
+<div id="sidebar">
+    <hr id="hr"></hr>
+    <div class="titleBar">
+          <h1>Stray Animals and Their Shelters in Austin, TX<h1>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <div class="chooseButton">
+        <img style = "position: absolute; top: 200px; left: 90px; width: 50px; height: 50px" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBB%0D%0AZG9iZSBJbGx1c3RyYXRvciAyMi4wLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9u%0D%0AOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIg0KCSBpZD0ic3ZnMiIgaW5r%0D%0Ac2NhcGU6dmVyc2lvbj0iMC45MSByMTM3MjUiIHhtbG5zOmNjPSJodHRwOi8vd2ViLnJlc291cmNl%0D%0ALm9yZy9jYy8iIHhtbG5zOmRjPSJodHRwOi8vcHVybC5vcmcvZGMvZWxlbWVudHMvMS4xLyIgeG1s%0D%0AbnM6aW5rc2NhcGU9Imh0dHA6Ly93d3cuaW5rc2NhcGUub3JnL25hbWVzcGFjZXMvaW5rc2NhcGUi%0D%0AIHhtbG5zOm5zMT0iaHR0cDovL3NvemkuYmFpZXJvdWdlLmZyIiB4bWxuczpyZGY9Imh0dHA6Ly93%0D%0Ad3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiIHhtbG5zOnNvZGlwb2RpPSJodHRw%0D%0AOi8vc29kaXBvZGkuc291cmNlZm9yZ2UubmV0L0RURC9zb2RpcG9kaS0wLmR0ZCIgeG1sbnM6c3Zn%0D%0APSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyINCgkgeG1sbnM9Imh0dHA6Ly93d3cudzMub3Jn%0D%0ALzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0i%0D%0AMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyNzUuNCAyMDQuMSINCgkgc3R5bGU9ImVuYWJsZS1i%0D%0AYWNrZ3JvdW5kOm5ldyAwIDAgMjc1LjQgMjA0LjE7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4NCjxz%0D%0AdHlsZSB0eXBlPSJ0ZXh0L2NzcyI+DQoJLnN0MHtmaWxsOiM2Q0NDREU7fQ0KPC9zdHlsZT4NCjxn%0D%0AIGlkPSJnMjM4Ij4NCgk8cGF0aCBpZD0icGF0aDEzMzciIGNsYXNzPSJzdDAiIGQ9Ik04NS4xLDE5%0D%0AMS41Yy05LjYtMTIuOC0xMS43LTE2LjItMTAuNS0zMi40YzEuNS0yMS4zLDEtMjEuMy0yNy44LDBj%0D%0ALTEzLjMsOS44LTE1LjksMTQuNi0xNC4yLDI2DQoJCWMxLjYsMTEsMC4yLDE0LTYuOCwxNGMtMTUu%0D%0AMSwwLTExLjktMzMsNS4yLTUzLjhjNy44LTkuNCw5LjQtMjIuMiwxMy4zLTMzLjFjNS4zLTE0Ljcs%0D%0AOC4yLTI2LjgsNy0zMC4yYy02LjEtMTktNi43LTI3LjUtMjAuMi00Ny4zDQoJCUM5LjgsMy42LTMu%0D%0AMiw1LjUsMC43LDAuOHMyNS42LDExLjMsMzUuNywyNi41QzQ2LjUsNDIuNiw1NCw1OC45LDYzLjks%0D%0ANjQuMmM5LjksNS4zLDk2LjksMjMsMTMwLjEsMTEuMWMxNC4xLTUsMzItMTIuMyw0Ny44LTEwLjYN%0D%0ACgkJYzguNiwxLDE0LjctMTUuNywxOC4xLTEyLjdjMi43LDIuNC00LjksOSwxMC4zLDIwLjhjNC4y%0D%0ALDMuMyw1LjQsOS41LDUuMiwxNC42Yy0wLjYsMTcuMy0xMC41LDExLjUtMjMuNywxMS41DQoJCWMt%0D%0AOS45LDAtMzIuNCwxMy43LTMxLjksMjcuOGMwLjIsNi4xLDMuOSwyNC4xLDExLjMsMzcuNWM0Ljks%0D%0AOC45LDguNCwxNy40LDExLjMsMjIuN2M0LjYsOC4zLDguMiw5LjgtMS4zLDEyLjENCgkJYy0yLjIs%0D%0AMC41LTYuOC01LjItMTAuMy0xMS42Yy0zLjQtNi40LTE0LjYtMjkuMS0yMi4zLTM0LjhjLTEyLjgt%0D%0AOS41LTExLTkuNy0xMy45LTIuMmMtMS43LDQuNS0yLjEsMjcuMiwwLjcsMzQuOA0KCQljNC4yLDEx%0D%0ALjIsNi4xLDEzLjktMS42LDEzLjljLTMuOCwwLTYuOS00LjMtNi45LTkuNmMwLTUuMy0zLjktMTgu%0D%0AMy03LjgtMjkuMWMtNC4zLTEyLDEuOC0xNC42LTcuOC0xOS41cy05LDAuMy0zMi4xLDIuMQ0KCQlj%0D%0ALTIzLjEsMS44LTMwLjEtMS0zOS40LDEyLjFjLTEzLjIsMTguNi0xMi43LDI0LjYsMy4zLDM3Ljdj%0D%0AOC42LDcsOC4zLDExLjQsMy42LDExLjRDOTUuMSwyMDQuMSw5MS40LDIwMCw4NS4xLDE5MS41TDg1%0D%0ALjEsMTkxLjV6Ig0KCQkvPg0KPC9nPg0KPC9zdmc+DQo=">
+        <button type="button" class="btn btn-info btn-sm" id="catButton">Cats</button>
+        <img style = "position: absolute; top: 200px; left: 240px; width: 50px; height: 50px"
+        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBB%0D%0AZG9iZSBJbGx1c3RyYXRvciAyMi4wLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9u%0D%0AOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1s%0D%0AbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53%0D%0AMy5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxMDAgMTI1%0D%0AIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMDAgMTI1OyIgeG1sOnNwYWNlPSJw%0D%0AcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojRkZDRTJGO30N%0D%0ACjwvc3R5bGU+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDEuMiw3OC42Yy0xLjMsMC44LTIuMyww%0D%0ALjItMy43LTAuMWMtMS4yLTAuMy0yLDAuMi0zLjEsMC40Yy0zLjgsMC43LTQtMy44LTYuOS00Ljlj%0D%0ALTAuNywxLjctMC4zLDMuNS0wLjUsNS4zDQoJYy0wLjIsMi42LTAuNCw1LjItMC43LDcuOGMtMC42%0D%0ALDQuMSwwLjUsOC40LTAuNSwxMi40Yy0wLjQsMS42LTAuOSw0LjItMi4zLDUuM2MtMC43LDAuNi00%0D%0ALjEsMC45LTQuNiwwLjJjLTAuNi0wLjgtNC4yLTAuMS01LjItMC42DQoJYy0yLjYtMS4yLTAuNi0y%0D%0ALjcsMC44LTRjMS4zLTEuMywzLTIsMy42LTMuOGMwLjYtMiwwLjctNS4zLDAuMS03LjNjLTAuNS0x%0D%0ALjgsMC4zLTMuOCwwLTUuN2MtMC41LTIuOS0xLjEtNS40LTAuOC04LjUNCgljMC4zLTIuOCwxLjEt%0D%0ANS4xLDAuMS03LjljLTAuNy0yLjMtMS4yLTQuMi0wLjUtNi42YzEtMy43LDEuMS04LjQsMi44LTEx%0D%0ALjljMC4zLTAuNywxLjUtMS41LDEuMi0yLjJjLTAuNi0xLjEtMS4xLTIuNS0yLTMuNA0KCWMtMS4z%0D%0ALTIuMi0yLjEtNC44LTIuMS03LjRjLTEuOSw0LjYtNy4zLTIuNy03LjctNS4xYy0wLjYtMS43LTIu%0D%0ANS00LjYtMS02LjNjMS4xLTEuMiwzLjMtMS44LDQuNi0yLjZjMS40LTAuNywzLjMtMS40LDQuNC0y%0D%0ALjQNCgljMC42LTAuNiwxLjQtMSwyLjItMS4xYzEuNC0wLjIsMi45LDEuNSwzLjgsMS4yYzIuNC0x%0D%0ALjEsNS4xLTEsNy43LTEuM2MyLjEtMC4yLDUtMC4xLDYuNiwxLjRjMS0xLjUsMi40LTEuOSw0LTEN%0D%0ACgljMS45LDEuMSwyLjUsMS44LDQuOCwyLjNjMy42LDAuNyw1LjYsMi42LDUuMyw2LjJjLTAuMywz%0D%0ALjUtMC4zLDcuMS0xLjIsMTAuNWMtMC4zLDEuMS0xLjEsMy4xLTIuMiwxLjRjLTEuMi0xLjgtMi43%0D%0ALTQuNC0yLjgtNi41DQoJYy0wLjQsMS42LTAuNiwzLjItMC44LDQuOGMtMC4xLDAuOS0xLjgsNS4y%0D%0ALTEuNyw1LjRjMC41LDAuOCwwLjMsMS41LDEuMiwxLjVjMS4zLDAsMi41LDAuMSwzLjgsMC4yYzIu%0D%0AMywwLjMsNC41LDEuMyw2LjgsMS40DQoJYzMuOCwwLjIsNy44LTMuNCwxMS01LjFjNS4yLTIuNywx%0D%0AMC44LTQuOCwxNi43LTVjMi4zLTAuMSw0LjcsMC4xLDYuOCwxYzAuNiwwLjMsNCwwLjksMy4zLDEu%0D%0AM2MtMi43LDEuOC01LjksMi05LjEsMi4yDQoJYy0zLjksMC4zLTcuOSwxLjYtMTEuMywzLjZjLTIu%0D%0AOCwxLjYtNS4zLDMuNy03LjIsNi4zYzAsMC4zLDAuOCwxLjIsMC45LDEuNGMwLjgsMS40LDEuNiwy%0D%0ALjgsMi4yLDQuM2MxLjYsMy43LDEuOSw3LjgsMy41LDExLjUNCgljMS43LDQuMiwxLjUsOC45LDMu%0D%0ANCwxMi45YzEuMiwyLjUsMC40LDYuNywwLjUsOS40YzAsMiwwLDQsMC4zLDZjMC4yLDEuMywwLjgs%0D%0AMi41LDAuOCwzLjljMC4yLDMuNC02LjEsMS41LTcuOSwxLjQNCgljLTIuNi0wLjEsMC43LTYuNSww%0D%0ALjktNy44YzAuMy0yLjEsMC4xLTQuNC0wLjMtNi40Yy0wLjMtMS45LTEuMy0zLjItMS4xLTUuMmMw%0D%0ALjItMS45LTAuOS0yLjgtMi40LTMuN2MtMS45LTEuMi0zLjgtMi45LTQuNC01LjINCgljLTMuMiwx%0D%0ALjQtNy42LDEuOC03LjcsNi4yYy0wLjEsMy44LTAuMSw3LjctMC41LDExLjVjLTAuMywzLjItMS40%0D%0ALDcuNy0wLjIsMTAuN2MwLjYsMS40LDEuOCw0LjQsMC4xLDUuNWMtMC44LDAuNi0xLjYsMC0yLjUs%0D%0AMC4yDQoJYy0xLjMsMC40LTIuOCwwLjUtNC4xLTAuMWMtMC42LDAtMS4zLDAuMi0xLjksMC4yYy0w%0D%0ALjgsMC0yLjEtMS0yLjUtMC43Yy0xLjcsMS4yLTAuMS00LjYsMC00LjljMC41LTEuMSwxLTIuNCwx%0D%0ALTMuNw0KCWMtMC4zLTAuNC0yLDAtMi4xLTAuN2MtMC43LTAuMS0xLjYsMC4xLTIuMywwLjFjLTAu%0D%0AOSwwLTEuNC0wLjQtMi4xLTAuNkMzNC40LDk1LjgsMzYsOTQsMzYuOSw5M2MwLjgtMC45LDEuNy0w%0D%0ALjgsMi42LTEuNA0KCWMwLjctMC40LDEuMy0xLjcsMS44LTIuNGMxLjEtMS44LDEuNi0zLjgsMS45%0D%0ALTUuOEM0My42LDgxLjUsNDIuMyw4MC4xLDQxLjIsNzguNnoiLz4NCjwvc3ZnPg0K">
+        <button type="button" class="btn btn-warning btn-sm" id="dogButton">Dogs</button>
+        <img style= "position: absolute; top: 170px; left: 400px; width: 80px; height: 80px"
+        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBB%0D%0AZG9iZSBJbGx1c3RyYXRvciAyMi4wLjEsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9u%0D%0AOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1s%0D%0AbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53%0D%0AMy5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAxMDAgMTAw%0D%0AIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAxMDAgMTAwOyIgeG1sOnNwYWNlPSJw%0D%0AcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojODA4MDgwO30N%0D%0ACjwvc3R5bGU+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNjQuNSw2NWMtMi40LDAtNC4zLDEuOC00%0D%0ALjMsNC4zdjEzLjJjMCwxLjQtMC4yLDEuNy0xLjYsMS43SDU4Yy0wLjItNS42LTEuMy0xMS43LTQu%0D%0AMi0xNC41DQoJYzIuMS0xLjMsMy41LTMuNiwzLjUtNi4yYzAtMi42LTEuNC00LjktMy41LTYuMmwt%0D%0AMS4yLTQuNWwtMSwzLjZjLTAuNS0wLjEtMS0wLjItMS42LTAuMnMtMS4xLDAuMS0xLjYsMC4ybC0x%0D%0ALTMuNmwtMS4yLDQuNQ0KCWMtMi4xLDEuMy0zLjUsMy42LTMuNSw2LjJjMCwyLjYsMS40LDQuOSwz%0D%0ALjUsNi4yYy0zLjQsMy4zLTQuMywxMC45LTQuMywxNy4xaDEzLjNINThoMC41YzIuOCwwLDQuMi0x%0D%0ALjQsNC4yLTQuM1Y2OS4zDQoJYzAtMSwwLjctMS43LDEuNy0xLjdjMC43LDAsMS4zLTAuNiwxLjMt%0D%0AMS4zQzY1LjcsNjUuNiw2NS4yLDY1LDY0LjUsNjV6Ii8+DQo8cG9seWdvbiBjbGFzcz0ic3QwIiBw%0D%0Ab2ludHM9IjEwLDQxLjggNS42LDQ1LjIgNS42LDM2LjYgNTAsMi43IDUwLDExLjMgMTQuMiwzOC42%0D%0AIDE0LjIsODkgNTAsODkgNTAsOTcuMyAxMCw5Ny4zICIvPg0KPHBvbHlnb24gY2xhc3M9InN0MCIg%0D%0AcG9pbnRzPSI5MCw0MS44IDk0LjQsNDUuMiA5NC40LDM2LjYgNTAsMi43IDUwLDExLjMgODUuOCwz%0D%0AOC42IDg1LjgsODkgNTAsODkgNTAsOTcuMyA5MCw5Ny4zICIvPg0KPC9zdmc+DQo=">
+        <button type="button" class="btn btn-secondary btn-sm" id="shelterButton">Shelters</button>
+
+        <button type="button" class="btn btn-outline-dark btn-sm" id="resetButton">Reset</button>
+      </div>
+      <div h2 id="subtitle">Click to see stray animals' found locations by type in past one week</div>
+      <!-- about -->
+      <button id="about" type="button" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#myModal">About</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-body">
+          <div class="container-fluid">
+               <h2 id="modalTitle">About the project</h2>
+               <p id="modalText">This map shows all stray cats and dogs currently listed in City of Austin, TX in late April and early May 2018.
+                 The function of the map contains two parts: in the first part you may choose to plot found cats, dogs,
+                 or animal rescue shelters by clicking at corresponding button, and move the mouse on the icon to see popup displaying that item's information;
+                 in the second part you may select a radius by the dropdown menu and a location on the map by putting the marker on it, and see the number of
+               animals rescued in the circle of your selected area in late April and early May 2018.</p>
+         </div>
+       </div>
+      </div>
+      </div>
+  </div>
+
+
+<hr id="hr2"></hr>
+    <div h2 id="counttitle">Select a a radius, put the marker on the map for your location to see the number of animals rescued within your selected radius</div>
+
+<!-- see the number of animals within selected radius -->
+<div id="count">
+    <div id="geocoder_box" class="geocoder">
+			<form id="geocoder" class="geocoder"></form>
+		</div>
+
+<div id="search">
+		<div>Search radius:</div>
+		<div class="form">
+			<select id="radius-selected" name="radius" style="width:100px; height: 30px; font-size: 14px; font-family: helvetica">
+				<option value="0.5">0.5 Kms</option>
+				<option value="1">1 Kms</option>
+				<option value="3">3 Kms</option>
+				<option value="5">5 Kms</option>
+        <option value="10">10 Kms</option>
+        <option value="15">15 Kms</option>
+			</select>
+		</div>
+</div>
+
+			<span id="result">0</span> Found locations of stray animals near you
+			<div id="description">These found animals are: </div>
+</div>
+</div>
+    <!-- Map -->
+    <div id="map" class="map"></div>
+
+
+<!-- framework JS code here. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js" integrity="sha256-CNm+7c26DTTCGRQkM9vp7aP85kHFMqs9MhPEuytF+fQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.2/leaflet.draw.js" integrity="sha256-jzmB6xy6L0YPzPeu+ccUiPKp3UE+qRmo5xmq5BbnSv0=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+    <script src="draw.js"></script>
+    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+
+
+  </body>
+</html>
